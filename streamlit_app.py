@@ -37,7 +37,7 @@ streamlit.dataframe(my_data_rows)
 
 streamlit.header("what fruit would you like to add?")
 sql = "INSERT INTO fruit_load_list (fruit_name) VALUES (%s)"
-add_my_fruit = "jackfruit"
+add_my_fruit = "from streamlit"
 my_cur.execute(sql, add_my_fruit)
 streamlit.header("Thanks for adding Jackfruit")
 
