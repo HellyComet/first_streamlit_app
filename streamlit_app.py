@@ -17,6 +17,7 @@ my_fruit_list = my_fruit_list.set_index('Fruit')
 # Let's put a pick list here so they can pick the fruit they want to include 
 fruits_selected = streamlit.multiselect("Pick some fruits:", list(my_fruit_list.index),["Avocado","Strawberries"])
 fruits_to_show = my_fruit_list.loc[fruits_selected]
+my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
 streamlit.header("Fruityvice Fruit Advice!")
@@ -59,14 +60,12 @@ def get_fruit_load_list():
 
 #Add a button to load list
 if streamlit.button('Get Fruit load list'):
-    my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
     my_data_rows = get_fruit_load_list()
     streamlit.dataframe(my_data_rows)
 
 def insert_row_snowflake(new_fruit):
        with my_cnx.cursor() as my_cur:
             sql = "insert into fruit_load_list(fruit_name) values (%s)"
-            my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
             my_cnx.execute(sql,new_fruit)
             return "Thanks for adding" + new_fruit
        
