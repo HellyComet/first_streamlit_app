@@ -39,4 +39,5 @@ streamlit.header("what fruit would you like to add?")
 sql = "INSERT INTO fruit_load_list (fruit_name) VALUES (%s)"
 add_my_fruit = "jackfruit"
 my_cur.execute(sql, add_my_fruit)
+streamlit.header("Thanks for adding Jackfruit")
 
